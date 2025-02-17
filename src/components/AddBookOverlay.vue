@@ -12,6 +12,7 @@ const purchaseDate = ref('');
 const borrowDate = ref(null);
 const author = ref('');
 const category = ref('');
+const summary = ref('');
 
 onMounted(() => {
   const today = new Date().toISOString().split('T')[0];
@@ -26,7 +27,8 @@ const submitForm = async () => {
     purchaseDate: purchaseDate.value,
     borrowDate: borrowDate.value || null,
     author: author.value,
-    category: category.value
+    category: category.value,
+    summary: summary.value
   };
 
   try {
@@ -68,6 +70,10 @@ const submitForm = async () => {
         <div class="mb-4">
           <label class="block text-gray-700">Category</label>
           <input v-model="category" type="text" class="w-full p-2 border border-gray-300 rounded" />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700">Summary</label>
+          <textarea v-model="summary" class="w-full p-2 border border-gray-300 rounded"></textarea>
         </div>
         <div class="flex justify-end">
           <button type="button" @click="$emit('closeOverlay')" class="mr-2 p-2 bg-gray-500 text-white rounded">Cancel</button>

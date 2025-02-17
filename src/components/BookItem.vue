@@ -32,6 +32,7 @@ const deleteBook = () => {
       <p>Category: {{ book.category }}</p>
       <p>Purchase Date: {{ purchaseDate }}</p>
       <p>Borrow Date: {{ borrowDate }}</p>
+      <p>Summary: {{ book.summary }}</p>
     </div>
     <button @click="deleteBook" class="text-gray-500 hover:text-gray-700 text-2xl">
       <i class="fas fa-trash-alt"></i>

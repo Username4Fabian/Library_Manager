@@ -99,6 +99,14 @@ const prevPage = () => {
     currentPage.value--;
   }
 };
+
+const firstPage = () => {
+  currentPage.value = 1;
+};
+
+const lastPage = () => {
+  currentPage.value = totalPages.value;
+};
 </script>
 
 <template>
@@ -110,7 +118,7 @@ const prevPage = () => {
         <BookItem :book="book" @deleteBook="deleteBook" />
       </li>
     </ul>
-    <Pagination :currentPage="currentPage" :totalPages="totalPages" @prevPage="prevPage" @nextPage="nextPage" />
+    <Pagination :currentPage="currentPage" :totalPages="totalPages" @prevPage="prevPage" @nextPage="nextPage" @firstPage="firstPage" @lastPage="lastPage" />
     <AddBookOverlay v-if="showOverlay" @closeOverlay="showOverlay = false" @addBook="addBook" />
     <Toast v-if="showToast" :message="toastMessage" @close="closeToast" />
   </div>

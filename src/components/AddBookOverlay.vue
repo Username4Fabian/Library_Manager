@@ -10,6 +10,7 @@ const number = ref('');
 const purchaseDate = ref('');
 const borrowDate = ref(null);
 const author = ref('');
+const category = ref('');
 
 onMounted(() => {
   const today = new Date().toISOString().split('T')[0];
@@ -22,7 +23,8 @@ const submitForm = async () => {
     number: number.value,
     purchaseDate: purchaseDate.value,
     borrowDate: borrowDate.value || null,
-    author: author.value
+    author: author.value,
+    category: category.value
   };
 
   try {
@@ -57,6 +59,10 @@ const submitForm = async () => {
           <label class="block text-gray-700">Author</label>
           <input v-model="author" type="text" class="w-full p-2 border border-gray-300 rounded" required />
         </div>
+        <div class="mb-4">
+          <label class="block text-gray-700">Category</label>
+          <input v-model="category" type="text" class="w-full p-2 border border-gray-300 rounded" required />
+        </div>
         <div class="flex justify-end">
           <button type="button" @click="$emit('closeOverlay')" class="mr-2 p-2 bg-gray-500 text-white rounded">Cancel</button>
           <button type="submit" class="p-2 bg-blue-500 text-white rounded">Add Book</button>
@@ -65,3 +71,7 @@ const submitForm = async () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+/* Add any additional styling here */
+</style>

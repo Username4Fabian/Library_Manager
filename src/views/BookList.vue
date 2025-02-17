@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import axios from 'axios';
 import SearchBar from '../components/SearchBar.vue';
 import BookItem from '../components/BookItem.vue';
@@ -63,6 +63,10 @@ onMounted(() => {
   fetchBooks();
 });
 
+watch([searchQuery, searchProperty], () => {
+  currentPage.value = 1;
+});
+
 const filteredBooks = computed(() => {
   if (!searchQuery.value) {
     return books.value;
@@ -112,13 +116,24 @@ const lastPage = () => {
 <template>
   <div class="container mx-auto p-4">
     <h1 class="text-2xl font-bold mb-4">Book List</h1>
-    <SearchBar v-model:searchQuery="searchQuery" v-model:searchProperty="searchProperty" @showOverlay="showOverlay = true" />
+    <SearchBar
+      v-model:searchQuery="searchQuery"
+      v-model:searchProperty="searchProperty"
+      @showOverlay="showOverlay = true"
+    />
     <ul>
       <li v-for="book in paginatedBooks" :key="book.id" class="mb-2">
         <BookItem :book="book" @deleteBook="deleteBook" />
       </li>
     </ul>
-    <Pagination :currentPage="currentPage" :totalPages="totalPages" @prevPage="prevPage" @nextPage="nextPage" @firstPage="firstPage" @lastPage="lastPage" />
+    <Pagination
+      :currentPage="currentPage"
+      :totalPages="totalPages"
+      @prevPage="prevPage"
+      @nextPage="nextPage"
+      @firstPage="firstPage"
+      @lastPage="lastPage"
+    />
     <AddBookOverlay v-if="showOverlay" @closeOverlay="showOverlay = false" @addBook="addBook" />
     <Toast v-if="showToast" :message="toastMessage" @close="closeToast" />
   </div>

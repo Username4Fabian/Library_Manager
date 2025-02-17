@@ -22,13 +22,8 @@ const fetchBooks = async () => {
   }
 };
 
-const addBook = async (newBook) => {
-  try {
-    const response = await axios.post('api/books/CreateNewBook', newBook);
-    books.value.push(response.data);
-  } catch (error) {
-    console.error('Error adding book:', error);
-  }
+const addBook = (newBook) => {
+  books.value.push(newBook);
 };
 
 onMounted(() => {
@@ -86,7 +81,3 @@ const prevPage = () => {
     <AddBookOverlay v-if="showOverlay" @closeOverlay="showOverlay = false" @addBook="addBook" />
   </div>
 </template>
-
-<style scoped>
-/* Add any additional styling here */
-</style>

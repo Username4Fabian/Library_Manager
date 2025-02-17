@@ -1,24 +1,37 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { defineEmits } from 'vue';
+import axios from 'axios';
 
 const emits = defineEmits(['closeOverlay', 'addBook']);
 
 const title = ref('');
 const number = ref('');
 const purchaseDate = ref('');
-const borrowDate = ref('');
+const borrowDate = ref(null);
 const author = ref('');
 
-const submitForm = () => {
+onMounted(() => {
+  const today = new Date().toISOString().split('T')[0];
+  purchaseDate.value = today;
+});
+
+const submitForm = async () => {
   const newBook = {
     title: title.value,
     number: number.value,
     purchaseDate: purchaseDate.value,
-    borrowDate: borrowDate.value,
+    borrowDate: borrowDate.value || null,
     author: author.value
   };
-  emits('addBook', newBook);
+
+  try {
+    const response = await axios.post('api/books/CreateNewBook', newBook);
+    emits('addBook', response.data);
+  } catch (error) {
+    console.error('Error adding book:', error);
+  }
+
   emits('closeOverlay');
 };
 </script>
@@ -39,10 +52,6 @@ const submitForm = () => {
         <div class="mb-4">
           <label class="block text-gray-700">Purchase Date</label>
           <input v-model="purchaseDate" type="date" class="w-full p-2 border border-gray-300 rounded" required />
-        </div>
-        <div class="mb-4">
-          <label class="block text-gray-700">Borrow Date</label>
-          <input v-model="borrowDate" type="date" class="w-full p-2 border border-gray-300 rounded" />
         </div>
         <div class="mb-4">
           <label class="block text-gray-700">Author</label>

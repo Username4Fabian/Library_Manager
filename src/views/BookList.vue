@@ -1,10 +1,10 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
 import axios from 'axios';
-import SearchBar from '../components/SearchBar.vue';
-import BookItem from '../components/BookItem.vue';
-import Pagination from '../components/Pagination.vue';
-import AddBookOverlay from '../components/AddBookOverlay.vue';
+import SearchBar from '../components/books/SearchBar.vue';
+import BookItem from '../components/books/BookItem.vue';
+import Pagination from '../components/books/Pagination.vue';
+import AddBookOverlay from '../components/books/AddBookOverlay.vue';
 import Toast from '../components/Toast.vue';
 
 const books = ref([]);

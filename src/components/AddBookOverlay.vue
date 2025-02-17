@@ -7,6 +7,7 @@ const emits = defineEmits(['closeOverlay', 'addBook']);
 
 const title = ref('');
 const number = ref('');
+const publisher = ref('');
 const purchaseDate = ref('');
 const borrowDate = ref(null);
 const author = ref('');
@@ -21,6 +22,7 @@ const submitForm = async () => {
   const newBook = {
     title: title.value,
     number: number.value,
+    publisher: publisher.value,
     purchaseDate: purchaseDate.value,
     borrowDate: borrowDate.value || null,
     author: author.value,
@@ -49,19 +51,23 @@ const submitForm = async () => {
         </div>
         <div class="mb-4">
           <label class="block text-gray-700">Number</label>
-          <input v-model="number" type="number" class="w-full p-2 border border-gray-300 rounded" required />
+          <input v-model="number" type="text" class="w-full p-2 border border-gray-300 rounded" required />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700">Publisher</label>
+          <input v-model="publisher" type="text" class="w-full p-2 border border-gray-300 rounded" />
         </div>
         <div class="mb-4">
           <label class="block text-gray-700">Purchase Date</label>
-          <input v-model="purchaseDate" type="date" class="w-full p-2 border border-gray-300 rounded" required />
+          <input v-model="purchaseDate" type="date" class="w-full p-2 border border-gray-300 rounded" />
         </div>
         <div class="mb-4">
           <label class="block text-gray-700">Author</label>
-          <input v-model="author" type="text" class="w-full p-2 border border-gray-300 rounded" required />
+          <input v-model="author" type="text" class="w-full p-2 border border-gray-300 rounded" />
         </div>
         <div class="mb-4">
           <label class="block text-gray-700">Category</label>
-          <input v-model="category" type="text" class="w-full p-2 border border-gray-300 rounded" required />
+          <input v-model="category" type="text" class="w-full p-2 border border-gray-300 rounded" />
         </div>
         <div class="flex justify-end">
           <button type="button" @click="$emit('closeOverlay')" class="mr-2 p-2 bg-gray-500 text-white rounded">Cancel</button>

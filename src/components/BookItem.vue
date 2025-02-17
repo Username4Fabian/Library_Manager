@@ -28,6 +28,7 @@ const deleteBook = () => {
       <h2 class="text-xl font-semibold">{{ book.title }}</h2>
       <p>Author: {{ book.author }}</p>
       <p>Number: {{ book.number }}</p>
+      <p>Publisher: {{ book.publisher }}</p>
       <p>Category: {{ book.category }}</p>
       <p>Purchase Date: {{ purchaseDate }}</p>
       <p>Borrow Date: {{ borrowDate }}</p>

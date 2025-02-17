@@ -40,6 +40,7 @@ const clearSearch = () => {
       <option value="title">Title</option>
       <option value="number">Number</option>
       <option value="category">Category</option>
+      <option value="summary">Summary</option>
     </select>
     <button @click="$emit('showOverlay')" class="ml-2 px-4 py-0.5 bg-blue-500 text-white rounded self-stretch">
       Add Book

@@ -31,7 +31,7 @@ const fetchBooks = async () => {
       localStorage.setItem('books', JSON.stringify(books.value));
       localStorage.setItem('lastFetchTime', now.toString());
     } catch (error) {
-      console.error('Error fetching books:', error);
+      console.error('Fehler beim Abrufen der Bücher:', error);
     }
   }
 };
@@ -39,7 +39,7 @@ const fetchBooks = async () => {
 const addBook = (newBook) => {
   books.value.push(newBook);
   localStorage.setItem('books', JSON.stringify(books.value));
-  toastMessage.value = 'Book added successfully!';
+  toastMessage.value = 'Buch erfolgreich hinzugefügt!';
   showToast.value = true;
 };
 
@@ -48,10 +48,10 @@ const deleteBook = async (bookId) => {
     await axios.delete(`api/books/DeleteBook/${bookId}`);
     books.value = books.value.filter(book => book.id !== bookId);
     localStorage.setItem('books', JSON.stringify(books.value));
-    toastMessage.value = 'Book deleted successfully!';
+    toastMessage.value = 'Buch erfolgreich gelöscht!';
     showToast.value = true;
   } catch (error) {
-    console.error('Error deleting book:', error);
+    console.error('Fehler beim Löschen des Buches:', error);
   }
 };
 
@@ -115,7 +115,7 @@ const lastPage = () => {
 
 <template>
   <div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Book List</h1>
+    <h1 class="text-2xl font-bold mb-4">Bücherliste</h1>
     <SearchBar
       v-model:searchQuery="searchQuery"
       v-model:searchProperty="searchProperty"

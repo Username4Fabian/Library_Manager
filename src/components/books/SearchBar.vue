@@ -20,7 +20,7 @@ const clearSearch = () => {
         :value="searchQuery"
         @input="$emit('update:searchQuery', $event.target.value)"
         type="text"
-        placeholder="Search books..."
+        placeholder="Bücher suchen..."
         class="p-2 border border-gray-300 rounded w-full"
       />
       <button
@@ -36,14 +36,14 @@ const clearSearch = () => {
       @change="$emit('update:searchProperty', $event.target.value)"
       class="ml-2 p-2 border border-gray-300 rounded"
       style="height: 40px;">
-      <option value="all">All</option>
-      <option value="title">Title</option>
-      <option value="number">Number</option>
-      <option value="category">Category</option>
-      <option value="summary">Summary</option>
+      <option value="all">Alle</option>
+      <option value="title">Titel</option>
+      <option value="number">Nummer</option>
+      <option value="category">Kategorie</option>
+      <option value="summary">Zusammenfassung</option>
     </select>
     <button @click="$emit('showOverlay')" class="ml-2 px-4 py-0.5 bg-blue-500 text-white rounded self-stretch">
-      Add Book
+      Buch hinzufügen
     </button>
   </div>
 </template>

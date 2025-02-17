@@ -16,7 +16,7 @@ const purchaseDate = computed(() => formatDate(props.book.purchaseDate));
 const borrowDate = computed(() => formatDate(props.book.borrowDate));
 
 const deleteBook = () => {
-  if (window.confirm(`Are you sure you want to delete the book "${props.book.title}"?`)) {
+  if (window.confirm(`Sind Sie sicher, dass Sie das Buch "${props.book.title}" löschen möchten?`)) {
     emits('deleteBook', props.book.id);
   }
 };
@@ -26,13 +26,13 @@ const deleteBook = () => {
   <div class="p-4 bg-white shadow rounded flex justify-between items-center">
     <div>
       <h2 class="text-xl font-semibold">{{ book.title }}</h2>
-      <p>Author: {{ book.author }}</p>
-      <p>Number: {{ book.number }}</p>
-      <p>Publisher: {{ book.publisher }}</p>
-      <p>Category: {{ book.category }}</p>
-      <p>Purchase Date: {{ purchaseDate }}</p>
-      <p>Borrow Date: {{ borrowDate }}</p>
-      <p>Summary: {{ book.summary }}</p>
+      <p>Autor: {{ book.author }}</p>
+      <p>Nummer: {{ book.number }}</p>
+      <p>Verlag: {{ book.publisher }}</p>
+      <p>Kategorie: {{ book.category }}</p>
+      <p>Kaufdatum: {{ purchaseDate }}</p>
+      <p>Ausleihdatum: {{ borrowDate }}</p>
+      <p>Zusammenfassung: {{ book.summary }}</p>
     </div>
     <button @click="deleteBook" class="text-gray-500 hover:text-gray-700 text-2xl">
       <i class="fas fa-trash-alt"></i>

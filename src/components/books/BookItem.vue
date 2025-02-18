@@ -39,7 +39,3 @@ const deleteBook = () => {
     </button>
   </div>
 </template>
-
-<style scoped>
-/* Add any additional styling here */
-</style>

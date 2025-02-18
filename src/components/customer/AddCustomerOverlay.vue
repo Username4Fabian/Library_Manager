@@ -1,0 +1,58 @@
+<script setup>
+import { ref } from 'vue';
+import { defineEmits } from 'vue';
+import axios from 'axios';
+
+const emits = defineEmits(['closeOverlay', 'addCustomer']);
+
+const firstName = ref('');
+const lastName = ref('');
+const group = ref('');
+const book = ref('');
+
+const errorMessage = ref('');
+
+const submitForm = async () => {
+  const newCustomer = {
+    firstName: firstName.value,
+    lastName: lastName.value,
+    group: group.value,
+    book: book.value ? { title: book.value } : null 
+  };
+
+  try {
+    const response = await axios.post('api/customers/CreateNewCustomer', newCustomer);
+    emits('addCustomer', response.data);
+    emits('closeOverlay');
+  } catch (error) {
+    console.error('Fehler beim Hinzufügen des Kindes:', error);
+    errorMessage.value = 'Fehler beim Hinzufügen des Kindes: ' + (error.response?.data?.message || error.message);
+  }
+};
+</script>
+
+<template>
+  <div class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
+    <div class="bg-white p-6 rounded shadow-lg w-1/3">
+      <h2 class="text-2xl font-bold mb-4">Neues Kind hinzufügen</h2>
+      <form @submit.prevent="submitForm">
+        <div class="mb-4">
+          <label class="block text-gray-700">Vorname</label>
+          <input v-model="firstName" type="text" class="w-full p-2 border border-gray-300 rounded" required />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700">Nachname</label>
+          <input v-model="lastName" type="text" class="w-full p-2 border border-gray-300 rounded" required />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700">Gruppe</label>
+          <input v-model="group" type="text" class="w-full p-2 border border-gray-300 rounded" />
+        </div>
+        <div class="flex justify-end">
+          <button type="button" @click="$emit('closeOverlay')" class="mr-2 p-2 bg-gray-500 text-white rounded">Abbrechen</button>
+          <button type="submit" class="p-2 bg-blue-500 text-white rounded">Kind hinzufügen</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>

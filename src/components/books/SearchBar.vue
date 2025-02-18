@@ -42,7 +42,7 @@ const clearSearch = () => {
       <option value="category">Kategorie</option>
       <option value="summary">Zusammenfassung</option>
     </select>
-    <button @click="$emit('showOverlay')" class="ml-2 px-4 py-0.5 bg-blue-500 text-white rounded self-stretch">
+    <button @click="$emit('showOverlay')" class="ml-2 px-4 py-0.5 bg-blue-500 hover:bg-blue-700 hover:scale-102 text-white rounded self-stretch">
       Buch hinzufügen
     </button>
   </div>

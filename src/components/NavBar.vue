@@ -4,7 +4,7 @@ import { RouterLink } from 'vue-router';
 
 const menuItems = ref([
   { name: 'Home', link: '/' },
-  { name: 'Aktuell', link: '/aktuell-ausgebort' },
+  { name: 'Aktuell', link: '/aktuell' },
   { name: 'Bücherliste', link: '/buecherliste' },
   { name: 'Kinderliste', link: '/kinderliste' },
   { name: 'Einstellungen', link: '/einstellungen' }

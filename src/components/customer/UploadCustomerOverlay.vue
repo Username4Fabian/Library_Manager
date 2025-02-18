@@ -113,12 +113,12 @@ const downloadExampleFile = () => {
       <input type="file" @change="handleFileUpload" class="hidden" ref="fileInput" />
       <p v-if="!file">
         <span v-if="dragOver" class="text-gray-500">Datei hier ablegen</span>
-        <span v-else class="text-gray-500">
+        <span v-else class="text-gray-400">
           Datei hierher ziehen oder klicken, um eine Datei auszuwählen.
           <br>
           Dies kann einige Minuten in Anspruch nehmen!
           <br>
-          Existierende Einträge werden gelöscht.
+          Alle existierenden Einträge werden gelöscht.
         </span>
       </p>
       <p v-else>{{ file.name }}</p>
@@ -126,8 +126,8 @@ const downloadExampleFile = () => {
     <div v-if="errorMessage" class="mb-4 text-red-500">{{ errorMessage }}</div>
     <div class="flex justify-end items-center">
       <div v-if="isLoading" class="loader mr-2"></div>
-      <button type="button" @click="downloadExampleFile" class="mt-2 ml-2 p-2 bg-gray-500 hover:bg-gray-700 text-white rounded hover:cursor-pointer">Beispieldatei herunterladen</button>
-      <button type="button" @click="processFile" :disabled="isLoading" class="mt-2 ml-2 p-2 bg-blue-500 hover:bg-blue-700 text-white rounded hover:cursor-pointer">Datei hochladen</button>
+      <button type="button" @click="downloadExampleFile" class="mt-2 ml-2 p-2 bg-gray-500 hover:bg-gray-700 text-white rounded hover:cursor-pointer hover:scale-102">Beispieldatei herunterladen</button>
+      <button type="button" @click="processFile" :disabled="isLoading" class="mt-2 ml-2 p-2 bg-blue-500 hover:bg-blue-700 text-white rounded hover:cursor-pointer hover:scale-102">Datei hochladen</button>
     </div>
   </div>
 </template>

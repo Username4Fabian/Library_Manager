@@ -27,7 +27,7 @@ const deleteCustomer = async () => {
       <p>Gruppe: {{ customer.group ? customer.group : '---' }}</p>
       <p>Buch: {{ customer.book ? customer.book.title : '---' }}</p>
     </div>
-    <button @click="deleteCustomer" class="text-gray-500 hover:text-gray-700 text-2xl hover:cursor-pointer">
+    <button @click="deleteCustomer" class="text-gray-500 hover:text-gray-700 text-2xl hover:cursor-pointer hover:scale-102">
       <i class="fas fa-trash-alt"></i>
     </button>
   </div>

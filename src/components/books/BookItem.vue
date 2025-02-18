@@ -34,7 +34,7 @@ const deleteBook = () => {
       <p>Ausleihdatum: {{ borrowDate }}</p>
       <p>Zusammenfassung: {{ book.summary }}</p>
     </div>
-    <button @click="deleteBook" class="text-gray-500 hover:text-gray-700 text-2xl">
+    <button @click="deleteBook" class="text-gray-500 hover:text-gray-700 text-2xl hover:scale-102">
       <i class="fas fa-trash-alt"></i>
     </button>
   </div>

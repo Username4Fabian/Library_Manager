@@ -76,8 +76,8 @@ const submitForm = async () => {
           <textarea v-model="summary" class="w-full p-2 border border-gray-300 rounded"></textarea>
         </div>
         <div class="flex justify-end">
-          <button type="button" @click="$emit('closeOverlay')" class="mr-2 p-2 bg-gray-500 text-white rounded">Abbrechen</button>
-          <button type="submit" class="p-2 bg-blue-500 text-white rounded">Buch hinzufügen</button>
+          <button type="button" @click="$emit('closeOverlay')" class="mr-2 p-2 bg-gray-500 hover:bg-gray-700 hover:scale-102 text-white rounded">Abbrechen</button>
+          <button type="submit" class="p-2 bg-blue-500 hover:bg-blue-700 hover:scale-102 text-white rounded">Buch hinzufügen</button>
         </div>
       </form>
     </div>

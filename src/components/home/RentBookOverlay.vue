@@ -88,6 +88,19 @@ const selectBook = (book) => {
 const rentBook = async () => {
   isLoading.value = true;
   errorMessage.value = '';
+
+  // Optimistic UI update
+  const selectedCustomer = customers.value.find(customer => customer.id === customerId.value);
+  const selectedBook = books.value.find(book => book.id === bookId.value);
+  const previousCustomerState = { ...selectedCustomer };
+
+  if (selectedCustomer && selectedBook) {
+    selectedCustomer.book = selectedBook;
+    localStorage.setItem('customers', JSON.stringify(customers.value));
+    emits('rentSuccess', 'Buch erfolgreich ausgeliehen!');
+    emits('closeOverlay');
+  }
+
   try {
     await axios.post('/api/rental/rentBook', null, {
       params: {
@@ -95,22 +108,13 @@ const rentBook = async () => {
         bookId: bookId.value
       }
     });
-
-    // Update local storage for the customer with the rented book
-    const updatedCustomers = customers.value.map(customer => {
-      if (customer.id === customerId.value) {
-        return { ...customer, book: books.value.find(book => book.id === bookId.value) };
-      }
-      return customer;
-    });
-    customers.value = updatedCustomers;
-    localStorage.setItem('customers', JSON.stringify(customers.value));
-
-    emits('rentSuccess', 'Buch erfolgreich ausgeliehen!');
-    emits('closeOverlay');
   } catch (error) {
     console.error('Error renting book:', error);
     errorMessage.value = 'Failed to rent book: ' + (error.response?.data?.message || error.message);
+
+    // Revert optimistic update
+    Object.assign(selectedCustomer, previousCustomerState);
+    localStorage.setItem('customers', JSON.stringify(customers.value));
   } finally {
     isLoading.value = false;
   }

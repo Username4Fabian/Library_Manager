@@ -18,8 +18,8 @@ const closeToast = () => {
 </script>
 
 <template>
-  <div>
-    <button @click="showOverlay = true" class="p-2 bg-blue-500 hover:bg-blue-700 text-white rounded">Buch ausleihen</button>
+  <div class="flex flex-col items-center justify-start h-screen p-4 md:p-40">
+    <button @click="showOverlay = true" class="w-full max-w-md p-4 bg-blue-500 hover:bg-blue-700 text-white text-2xl rounded mb-4">Buch ausleihen</button>
     <RentBookOverlay v-if="showOverlay" @closeOverlay="showOverlay = false" @rentSuccess="handleRentSuccess" />
     <Toast v-if="showToast" :message="toastMessage" @close="closeToast" />
   </div>

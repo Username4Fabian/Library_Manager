@@ -41,7 +41,7 @@ const clearSearch = () => {
       <option value="lastName">Nachname</option>
       <option value="group">Gruppe</option>
     </select>
-    <button @click="$emit('showOverlay')" class="ml-2 px-4 py-0.5 bg-blue-500 text-white rounded self-stretch">
+    <button @click="$emit('showOverlay')" class="ml-2 px-4 py-0.5 bg-blue-500 hover:bg-blue-700 text-white rounded self-stretch hover:cursor-pointer">
       Kind hinzufügen
     </button>
   </div>

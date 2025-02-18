@@ -91,27 +91,43 @@ const processFile = async () => {
     isLoading.value = false;
   }
 };
+
+const downloadExampleFile = () => {
+  const link = document.createElement('a');
+  link.href = 'api//customers/downloadFile';
+  link.download = 'Beispiel.xlsx';
+  link.click();
+};
 </script>
 
 <template>
   <div class="mb-4">
-    <label class="block text-gray-700">Datei hochladen</label>
+    <label class="block text-gray-700">Datei (alle Kinder) hochladen</label>
     <div
       @click="triggerFileInput"
       @dragover="handleDragOver"
       @dragleave="handleDragLeave"
       @drop="handleDrop"
       :class="{'border-blue-500': dragOver, 'border-gray-300': !dragOver}"
-      class="w-full p-4 border-2 border-dashed rounded text-center cursor-pointer"
-    >
+      class="w-full p-4 border-2 border-dashed rounded text-center cursor-pointer">
       <input type="file" @change="handleFileUpload" class="hidden" ref="fileInput" />
-      <p v-if="!file">{{ dragOver ? 'Datei hier ablegen' : 'Datei hierher ziehen oder klicken, um eine Datei auszuwählen' }}</p>
+      <p v-if="!file">
+        <span v-if="dragOver" class="text-gray-500">Datei hier ablegen</span>
+        <span v-else class="text-gray-500">
+          Datei hierher ziehen oder klicken, um eine Datei auszuwählen.
+          <br>
+          Dies kann einige Minuten in Anspruch nehmen!
+          <br>
+          Existierende Einträge werden gelöscht.
+        </span>
+      </p>
       <p v-else>{{ file.name }}</p>
     </div>
     <div v-if="errorMessage" class="mb-4 text-red-500">{{ errorMessage }}</div>
-    <div class="flex justify-center items-center">
+    <div class="flex justify-end items-center">
       <div v-if="isLoading" class="loader mr-2"></div>
-      <button type="button" @click="processFile" :disabled="isLoading" class="mt-2 ml-2 p-2 bg-green-500 text-white rounded">Datei hochladen</button>
+      <button type="button" @click="downloadExampleFile" class="mt-2 ml-2 p-2 bg-gray-500 hover:bg-gray-700 text-white rounded hover:cursor-pointer">Beispieldatei herunterladen</button>
+      <button type="button" @click="processFile" :disabled="isLoading" class="mt-2 ml-2 p-2 bg-blue-500 hover:bg-blue-700 text-white rounded hover:cursor-pointer">Datei hochladen</button>
     </div>
   </div>
 </template>

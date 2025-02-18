@@ -59,12 +59,12 @@ const handleUploadStart = () => {
           <label class="block text-gray-700">Gruppe</label>
           <input v-model="group" type="text" class="w-full p-2 border border-gray-300 rounded" />
         </div>
+        <div class="flex justify-end mb-4">
+          <button type="button" @click="$emit('closeOverlay')" :disabled="isLoading" class="mr-2 p-2 bg-gray-500 hover:bg-gray-700 text-white rounded hover:cursor-pointer">Abbrechen</button>
+          <button type="submit" :disabled="isLoading" class="p-2 bg-blue-500 hover:bg-blue-700 text-white rounded hover:cursor-pointer">Kind hinzufügen</button>
+        </div>
         <UploadCustomerOverlay @uploadSuccess="handleUploadSuccess" @uploadStart="handleUploadStart" @closeOverlay="$emit('closeOverlay')" />
         <div v-if="errorMessage" class="mb-4 text-red-500">{{ errorMessage }}</div>
-        <div class="flex justify-end">
-          <button type="button" @click="$emit('closeOverlay')" :disabled="isLoading" class="mr-2 p-2 bg-gray-500 text-white rounded">Abbrechen</button>
-          <button type="submit" :disabled="isLoading" class="p-2 bg-blue-500 text-white rounded">Kind hinzufügen</button>
-        </div>
       </form>
     </div>
   </div>

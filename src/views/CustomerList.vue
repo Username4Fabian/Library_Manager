@@ -55,6 +55,12 @@ const handleCustomerDeleted = (deletedCustomer) => {
   }
 };
 
+const handleUploadSuccess = () => {
+  fetchCustomers();
+  toastMessage.value = 'Kunden erfolgreich hochgeladen!';
+  showToast.value = true;
+};
+
 const closeToast = () => {
   showToast.value = false;
 };
@@ -136,7 +142,7 @@ const lastPage = () => {
       @firstPage="firstPage"
       @lastPage="lastPage"
     />
-    <AddCustomerOverlay v-if="showOverlay" @closeOverlay="showOverlay = false" @addCustomer="addCustomer" />
+    <AddCustomerOverlay v-if="showOverlay" @closeOverlay="showOverlay = false" @addCustomer="addCustomer" @uploadSuccess="handleUploadSuccess" />
     <Toast v-if="showToast" :message="toastMessage" @close="closeToast" />
   </div>
 </template>

@@ -2,8 +2,9 @@
 import { ref } from 'vue';
 import { defineEmits } from 'vue';
 import axios from 'axios';
+import UploadCustomerOverlay from './UploadCustomerOverlay.vue';
 
-const emits = defineEmits(['closeOverlay', 'addCustomer']);
+const emits = defineEmits(['closeOverlay', 'addCustomer', 'uploadSuccess']);
 
 const firstName = ref('');
 const lastName = ref('');
@@ -11,6 +12,7 @@ const group = ref('');
 const book = ref('');
 
 const errorMessage = ref('');
+const isLoading = ref(false);
 
 const submitForm = async () => {
   const newCustomer = {
@@ -28,6 +30,15 @@ const submitForm = async () => {
     console.error('Fehler beim Hinzufügen des Kindes:', error);
     errorMessage.value = 'Fehler beim Hinzufügen des Kindes: ' + (error.response?.data?.message || error.message);
   }
+};
+
+const handleUploadSuccess = () => {
+  isLoading.value = false;
+  emits('uploadSuccess');
+};
+
+const handleUploadStart = () => {
+  isLoading.value = true;
 };
 </script>
 
@@ -48,9 +59,11 @@ const submitForm = async () => {
           <label class="block text-gray-700">Gruppe</label>
           <input v-model="group" type="text" class="w-full p-2 border border-gray-300 rounded" />
         </div>
+        <UploadCustomerOverlay @uploadSuccess="handleUploadSuccess" @uploadStart="handleUploadStart" @closeOverlay="$emit('closeOverlay')" />
+        <div v-if="errorMessage" class="mb-4 text-red-500">{{ errorMessage }}</div>
         <div class="flex justify-end">
-          <button type="button" @click="$emit('closeOverlay')" class="mr-2 p-2 bg-gray-500 text-white rounded">Abbrechen</button>
-          <button type="submit" class="p-2 bg-blue-500 text-white rounded">Kind hinzufügen</button>
+          <button type="button" @click="$emit('closeOverlay')" :disabled="isLoading" class="mr-2 p-2 bg-gray-500 text-white rounded">Abbrechen</button>
+          <button type="submit" :disabled="isLoading" class="p-2 bg-blue-500 text-white rounded">Kind hinzufügen</button>
         </div>
       </form>
     </div>

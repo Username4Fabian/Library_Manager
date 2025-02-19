@@ -21,7 +21,7 @@ watch(router.currentRoute, () => {
 <template>
   <nav class="bg-gray-800 p-4">
     <div class="container mx-auto flex justify-between items-center">
-      <div class="text-white text-lg font-bold">Library Manager</div>
+      <router-link to="/" class="text-white text-lg font-bold">Library Manager</router-link>
       <ul class="hidden md:flex space-x-4">
         <li v-for="item in menuItems" :key="item.name">
           <router-link :to="item.link" class="text-white hover:text-gray-400">{{ item.name }}</router-link>

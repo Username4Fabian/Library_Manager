@@ -34,13 +34,13 @@ watch(searchQuery, (newValue) => {
 
 <template>
   <div class="mb-4 relative">
-    <label class="block text-gray-700">Kunde</label>
+    <label class="block text-gray-700">Name</label>
     <input
       v-model="searchQuery"
       @focus="showCustomerDropdown = true"
       @input="showCustomerDropdown = true"
       type="text"
-      placeholder="Kunden suchen..."
+      placeholder="Kind suchen..."
       class="w-full p-2 border border-gray-300 rounded mb-2"
     />
     <ul v-if="showCustomerDropdown && filteredCustomers.length" class="absolute z-10 w-full bg-white border border-gray-300 rounded mt-1 max-h-40 overflow-y-auto">

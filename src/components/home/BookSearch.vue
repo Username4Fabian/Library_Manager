@@ -40,7 +40,7 @@ watch(bookQuery, (newValue) => {
       @focus="showBookDropdown = true"
       @input="showBookDropdown = true"
       type="text"
-      placeholder="Buch Nummer"
+      placeholder="Buch Nummer..."
       class="w-full p-2 border border-gray-300 rounded mb-2"
     />
     <ul v-if="showBookDropdown && filteredBooks.length" class="absolute z-10 w-full bg-white border border-gray-300 rounded mt-1 max-h-40 overflow-y-auto">
@@ -50,7 +50,7 @@ watch(bookQuery, (newValue) => {
         @click="selectBook(book)"
         class="p-2 cursor-pointer hover:bg-gray-200"
       >
-        {{ book.number }} - {{ book.title }}
+        {{ book.number }} | {{ book.title }}
       </li>
     </ul>
   </div>

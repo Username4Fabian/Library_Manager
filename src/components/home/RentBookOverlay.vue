@@ -35,7 +35,7 @@ const fetchCustomers = async () => {
       localStorage.setItem('customers', JSON.stringify(customers.value));
       localStorage.setItem('lastFetchTime', now.toString());
     } catch (error) {
-      console.error('Fehler beim Abrufen der Kunden:', error);
+      console.error('Fehler beim Abrufen der Kinder:', error);
     }
   }
 };
@@ -75,11 +75,23 @@ const rentBook = async () => {
   isLoading.value = true;
   errorMessage.value = '';
 
+  if (!customerId.value) {
+    errorMessage.value = 'Bitte wählen Sie einen Kind aus.';
+    isLoading.value = false;
+    return;
+  }
+
+  if (!bookId.value) {
+    errorMessage.value = 'Bitte wählen Sie ein Buch aus.';
+    isLoading.value = false;
+    return;
+  }
+
   const selectedCustomer = customers.value.find(customer => customer.id === customerId.value);
   const selectedBook = books.value.find(book => book.id === bookId.value);
 
   if (selectedCustomer && selectedCustomer.book) {
-    errorMessage.value = 'Dieser Kunde hat bereits ein Buch ausgeliehen.';
+    errorMessage.value = 'Dieses Kind hat bereits ein Buch ausgeliehen.';
     isLoading.value = false;
     return;
   }

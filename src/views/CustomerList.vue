@@ -15,7 +15,7 @@ const customersPerPage = 15;
 const showOverlay = ref(false);
 const showToast = ref(false);
 const toastMessage = ref('');
-const fetchInterval = 5 * 60 * 1000; // 5 minutes in milliseconds
+const fetchInterval = 3 * 60 * 1000; // 5 minutes in milliseconds
 
 const fetchCustomers = async () => {
   const cachedCustomers = localStorage.getItem('customers');

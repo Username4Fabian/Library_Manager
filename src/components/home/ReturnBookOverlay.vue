@@ -34,7 +34,7 @@ const fetchCustomers = async () => {
       localStorage.setItem('customers', JSON.stringify(customers.value));
       localStorage.setItem('lastFetchTime', now.toString());
     } catch (error) {
-      console.error('Fehler beim Abrufen der Kunden:', error);
+      console.error('Fehler beim Abrufen der Kinder:', error);
     }
   }
 };
@@ -78,13 +78,13 @@ const returnBook = async () => {
   const selectedBook = books.value.find(book => book.id === bookId.value);
 
   if (!selectedCustomer && !selectedBook) {
-    errorMessage.value = 'Bitte geben Sie entweder einen Kunden oder eine Buchnummer ein.';
+    errorMessage.value = 'Bitte geben Sie entweder ein Kind oder eine Buchnummer ein.';
     isLoading.value = false;
     return;
   }
 
   if (selectedCustomer && !selectedCustomer.book) {
-    errorMessage.value = 'Dieser Kunde hat kein Buch ausgeliehen.';
+    errorMessage.value = 'Dieses Kind hat kein Buch ausgeliehen.';
     isLoading.value = false;
     return;
   }

@@ -31,7 +31,7 @@ const fetchCustomers = async () => {
       localStorage.setItem('customers', JSON.stringify(customers.value));
       localStorage.setItem('lastFetchTime', now.toString());
     } catch (error) {
-      console.error('Fehler beim Abrufen der Kinder:', error);
+      console.error('Fehler beim Abrufen der Kunden:', error);
     }
   }
 };
@@ -39,14 +39,14 @@ const fetchCustomers = async () => {
 const addCustomer = (newCustomer) => {
   customers.value.push(newCustomer);
   localStorage.setItem('customers', JSON.stringify(customers.value));
-  toastMessage.value = 'Kind erfolgreich hinzugefügt!';
+  toastMessage.value = 'Kunde erfolgreich hinzugefügt!';
   showToast.value = true;
 };
 
 const handleCustomerDeleted = (deletedCustomer) => {
   customers.value = customers.value.filter(c => c.id !== deletedCustomer.id);
   localStorage.setItem('customers', JSON.stringify(customers.value));
-  toastMessage.value = 'Kind erfolgreich gelöscht!';
+  toastMessage.value = 'Kunde erfolgreich gelöscht!';
   showToast.value = true;
 
   const totalPages = Math.ceil(customers.value.length / customersPerPage);

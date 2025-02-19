@@ -3,7 +3,7 @@ import { ref, computed, watch, onMounted } from 'vue';
 import { defineEmits } from 'vue';
 import axios from 'axios';
 
-const emits = defineEmits(['closeOverlay', 'rentSuccess']);
+const emits = defineEmits(['closeOverlay', 'returnSuccess']);
 
 const customerId = ref('');
 const bookId = ref('');
@@ -85,43 +85,67 @@ const selectBook = (book) => {
   showBookDropdown.value = false;
 };
 
-const rentBook = async () => {
+const returnBook = async () => {
   isLoading.value = true;
   errorMessage.value = '';
 
   const selectedCustomer = customers.value.find(customer => customer.id === customerId.value);
   const selectedBook = books.value.find(book => book.id === bookId.value);
 
-  if (selectedCustomer && selectedCustomer.book) {
-    errorMessage.value = 'Dieser Kunde hat bereits ein Buch ausgeliehen.';
+  if (!selectedCustomer && !selectedBook) {
+    errorMessage.value = 'Bitte geben Sie entweder einen Kunden oder eine Buchnummer ein.';
     isLoading.value = false;
     return;
   }
 
-  // Optimistic UI update
-  const previousCustomerState = { ...selectedCustomer };
-
-  if (selectedCustomer && selectedBook) {
-    selectedCustomer.book = selectedBook;
-    localStorage.setItem('customers', JSON.stringify(customers.value));
-    emits('rentSuccess', 'Buch erfolgreich ausgeliehen!');
-    emits('closeOverlay');
+  if (selectedCustomer && !selectedCustomer.book) {
+    errorMessage.value = 'Dieser Kunde hat kein Buch ausgeliehen.';
+    isLoading.value = false;
+    return;
   }
 
+  if (selectedBook) {
+    const customerWithBook = customers.value.find(customer => customer.book && customer.book.id === selectedBook.id);
+    if (!customerWithBook) {
+      errorMessage.value = 'Dieses Buch ist nicht ausgeliehen.';
+      isLoading.value = false;
+      return;
+    }
+  }
+
+  // Optimistic UI update
+  const previousCustomerState = selectedCustomer ? { ...selectedCustomer } : null;
+
+  if (selectedCustomer) {
+    selectedCustomer.book = null;
+    localStorage.setItem('customers', JSON.stringify(customers.value));
+  } else if (selectedBook) {
+    const customerWithBook = customers.value.find(customer => customer.book && customer.book.id === selectedBook.id);
+    if (customerWithBook) {
+      customerWithBook.book = null;
+      localStorage.setItem('customers', JSON.stringify(customers.value));
+    }
+  }
+
+  emits('returnSuccess', 'Buch erfolgreich zurückgegeben!');
+  emits('closeOverlay');
+
   try {
-    await axios.post('/api/rental/rentBook', null, {
+    await axios.post('/api/rental/returnBook', null, {
       params: {
-        customerId: customerId.value,
-        bookId: bookId.value
+        customerId: customerId.value || undefined,
+        bookId: bookId.value || undefined
       }
     });
   } catch (error) {
-    console.error('Error renting book:', error);
-    errorMessage.value = 'Failed to rent book: ' + (error.response?.data?.message || error.message);
+    console.error('Error returning book:', error);
+    errorMessage.value = 'Failed to return book: ' + (error.response?.data?.message || error.message);
 
     // Revert optimistic update
-    Object.assign(selectedCustomer, previousCustomerState);
-    localStorage.setItem('customers', JSON.stringify(customers.value));
+    if (previousCustomerState) {
+      Object.assign(selectedCustomer, previousCustomerState);
+      localStorage.setItem('customers', JSON.stringify(customers.value));
+    }
   } finally {
     isLoading.value = false;
   }
@@ -139,8 +163,8 @@ watch(bookQuery, fetchBooks);
 <template>
   <div class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
     <div class="bg-white p-6 rounded shadow-lg w-1/3">
-      <h2 class="text-2xl font-bold mb-4">Buch ausleihen</h2>
-      <form @submit.prevent="rentBook">
+      <h2 class="text-2xl font-bold mb-4">Buch zurückgeben</h2>
+      <form @submit.prevent="returnBook">
         <div class="mb-4 relative">
           <label class="block text-gray-700">Kunde</label>
           <input
@@ -186,7 +210,7 @@ watch(bookQuery, fetchBooks);
         <div class="flex justify-end items-center">
           <div v-if="isLoading" class="loader mr-2"></div>
           <button type="button" @click="$emit('closeOverlay')" class="mr-2 p-2 bg-gray-500 hover:bg-gray-700 text-white rounded hover:scale-102 hover:cursor-pointer">Abbrechen</button>
-          <button type="submit" :disabled="isLoading" class="p-2 bg-blue-500 hover:bg-blue-700 text-white rounded hover:scale-102 hover:cursor-pointer">Buch ausleihen</button>
+          <button type="submit" :disabled="isLoading" class="p-2 bg-blue-500 hover:bg-blue-700 text-white rounded hover:scale-102 hover:cursor-pointer">Buch zurückgeben</button>
         </div>
         <div v-if="errorMessage" class="mt-4 text-red-500">{{ errorMessage }}</div>
       </form>

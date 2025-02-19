@@ -31,7 +31,7 @@ watch(isVisible, (newVal) => {
 </script>
 
 <template>
-  <div v-if="isVisible" @click="closeToast" :style="{ animationDuration: props.duration + 'ms' }" class="toast fixed top-4 right-4 bg-green-500 text-white p-4 rounded shadow-lg z-50 text-3xl max-w-xs break-words text-center cursor-pointer">
+  <div v-if="isVisible" @click="closeToast" :style="{ animationDuration: props.duration + 'ms' }" class="toast fixed top-4 right-4 bg-green-500 text-white p-4 rounded shadow-lg z-50 text-lg md:text-2xl lg:text-3xl max-w-xs md:max-w-sm lg:max-w-md break-words text-center cursor-pointer">
     {{ message }}
   </div>
 </template>

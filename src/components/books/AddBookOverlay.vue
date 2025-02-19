@@ -44,7 +44,7 @@ const submitForm = async () => {
 
 <template>
   <div class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
-    <div class="bg-white p-6 rounded shadow-lg w-1/3">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-md md:max-w-lg lg:max-w-xl">
       <h2 class="text-2xl font-bold mb-4">Neues Buch hinzufügen</h2>
       <form @submit.prevent="submitForm">
         <div class="mb-4">
@@ -75,15 +75,11 @@ const submitForm = async () => {
           <label class="block text-gray-700">Zusammenfassung</label>
           <textarea v-model="summary" class="w-full p-2 border border-gray-300 rounded"></textarea>
         </div>
-        <div class="flex justify-end">
-          <button type="button" @click="$emit('closeOverlay')" class="mr-2 p-2 bg-gray-500 hover:bg-gray-700 hover:scale-102 text-white rounded">Abbrechen</button>
-          <button type="submit" class="p-2 bg-blue-500 hover:bg-blue-700 hover:scale-102 text-white rounded">Buch hinzufügen</button>
+        <div class="flex flex-col md:flex-row justify-end items-center space-y-2 md:space-y-0 md:space-x-2">
+          <button type="button" @click="$emit('closeOverlay')" class="p-2 bg-gray-500 hover:bg-gray-700 text-white rounded hover:cursor-pointer hover:scale-102">Abbrechen</button>
+          <button type="submit" class="p-2 bg-blue-500 hover:bg-blue-700 text-white rounded hover:cursor-pointer hover:scale-102">Buch hinzufügen</button>
         </div>
       </form>
     </div>
   </div>
 </template>
-
-<style scoped>
-/* Add any additional styling here */
-</style>

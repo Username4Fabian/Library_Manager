@@ -147,7 +147,7 @@ watch(bookQuery, fetchBooks);
 
 <template>
   <div class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
-    <div class="bg-white p-6 rounded shadow-lg w-1/3">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-md md:max-w-lg lg:max-w-xl">
       <h2 class="text-2xl font-bold mb-4">Buch ausleihen</h2>
       <form @submit.prevent="rentBook">
         <div v-if="isFetchingCustomers" class="text-gray-500 text-sm mt-1">Lade Kunden...</div>

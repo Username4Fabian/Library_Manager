@@ -123,14 +123,14 @@ const lastPage = () => {
 
 <template>
   <div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Kinderliste</h1>
+    <h1 class="text-2xl md:text-4xl font-bold mb-4">Kinderliste</h1>
     <CustomerSearchBar
       v-model:searchQuery="searchQuery"
       v-model:searchProperty="searchProperty"
       :showAddButton="true"
       @showOverlay="showOverlay = true"
     />
-    <ul>
+    <ul class="space-y-2">
       <li v-for="customer in paginatedCustomers" :key="customer.id" class="mb-2">
         <CustomerItem :customer="customer" actionType="delete" @customerDeleted="handleCustomerDeleted" />
       </li>
@@ -147,3 +147,9 @@ const lastPage = () => {
     <Toast v-if="showToast" :message="toastMessage" @close="closeToast" />
   </div>
 </template>
+
+<style scoped>
+.container {
+  max-width: 100%;
+}
+</style>

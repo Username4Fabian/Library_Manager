@@ -94,7 +94,7 @@ const processFile = async () => {
 
 const downloadExampleFile = () => {
   const link = document.createElement('a');
-  link.href = 'api//customers/downloadFile';
+  link.href = 'api/customers/downloadFile';
   link.download = 'Beispiel.xlsx';
   link.click();
 };
@@ -124,7 +124,7 @@ const downloadExampleFile = () => {
       <p v-else>{{ file.name }}</p>
     </div>
     <div v-if="errorMessage" class="mb-4 text-red-500">{{ errorMessage }}</div>
-    <div class="flex justify-end items-center">
+    <div class="flex flex-col md:flex-row justify-end items-center space-y-2 md:space-y-0 md:space-x-2">
       <div v-if="isLoading" class="loader mr-2"></div>
       <button type="button" @click="downloadExampleFile" class="mt-2 ml-2 p-2 bg-gray-500 hover:bg-gray-700 text-white rounded hover:cursor-pointer hover:scale-102">Beispieldatei herunterladen</button>
       <button type="button" @click="processFile" :disabled="isLoading" class="mt-2 ml-2 p-2 bg-blue-500 hover:bg-blue-700 text-white rounded hover:cursor-pointer hover:scale-102">Datei hochladen</button>

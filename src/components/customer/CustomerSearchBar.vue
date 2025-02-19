@@ -3,7 +3,11 @@ import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
   searchQuery: String,
-  searchProperty: String
+  searchProperty: String,
+  showAddButton: {
+    type: Boolean,
+    default: true
+  }
 });
 
 const emits = defineEmits(['update:searchQuery', 'update:searchProperty', 'showOverlay']);
@@ -41,7 +45,11 @@ const clearSearch = () => {
       <option value="lastName">Nachname</option>
       <option value="group">Gruppe</option>
     </select>
-    <button @click="$emit('showOverlay')" class="ml-2 px-4 py-0.5 bg-blue-500 hover:bg-blue-700 text-white rounded self-stretch hover:cursor-pointer hover:scale-102">
+    <button
+      v-if="showAddButton"
+      @click="$emit('showOverlay')"
+      class="ml-2 px-4 py-0.5 bg-blue-500 hover:bg-blue-700 text-white rounded self-stretch hover:cursor-pointer hover:scale-102"
+    >
       Kind hinzufügen
     </button>
   </div>

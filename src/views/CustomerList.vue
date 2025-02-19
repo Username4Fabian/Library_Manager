@@ -26,7 +26,7 @@ const fetchCustomers = async () => {
     customers.value = JSON.parse(cachedCustomers);
   } else {
     try {
-      const response = await axios.get('api/customers/GetAllCustomers');
+      const response = await axios.get('/api/customers/GetAllCustomers');
       customers.value = response.data;
       localStorage.setItem('customers', JSON.stringify(customers.value));
       localStorage.setItem('lastFetchTime', now.toString());
@@ -127,11 +127,12 @@ const lastPage = () => {
     <CustomerSearchBar
       v-model:searchQuery="searchQuery"
       v-model:searchProperty="searchProperty"
+      :showAddButton="true"
       @showOverlay="showOverlay = true"
     />
     <ul>
       <li v-for="customer in paginatedCustomers" :key="customer.id" class="mb-2">
-        <CustomerItem :customer="customer" @customerDeleted="handleCustomerDeleted" />
+        <CustomerItem :customer="customer" actionType="delete" @customerDeleted="handleCustomerDeleted" />
       </li>
     </ul>
     <Pagination

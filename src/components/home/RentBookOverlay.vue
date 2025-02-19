@@ -135,7 +135,9 @@ onMounted(() => {
   fetchCustomers();
   fetchBooks();
   nextTick(() => {
-    customerInputRef.value.focus();
+    if (customerInputRef.value) {
+      customerInputRef.value.focus();
+    }
   });
 });
 

@@ -15,6 +15,8 @@ const bookQuery = ref('');
 const customers = ref([]);
 const books = ref([]);
 const isLoading = ref(false);
+const isFetchingCustomers = ref(false);
+const isFetchingBooks = ref(false);
 const errorMessage = ref('');
 const showCustomerDropdown = ref(false);
 const showBookDropdown = ref(false);
@@ -22,6 +24,7 @@ const fetchInterval = 5 * 60 * 1000; // 5 minutes in milliseconds
 const customerInputRef = ref(null);
 
 const fetchCustomers = async () => {
+  isFetchingCustomers.value = true;
   const cachedCustomers = localStorage.getItem('customers');
   const lastFetchTime = localStorage.getItem('lastFetchTime');
   const now = Date.now();
@@ -38,9 +41,11 @@ const fetchCustomers = async () => {
       console.error('Fehler beim Abrufen der Kinder:', error);
     }
   }
+  isFetchingCustomers.value = false;
 };
 
 const fetchBooks = async () => {
+  isFetchingBooks.value = true;
   const cachedBooks = localStorage.getItem('books');
   const lastFetchTime = localStorage.getItem('lastBookFetchTime');
   const now = Date.now();
@@ -57,6 +62,7 @@ const fetchBooks = async () => {
       console.error('Fehler beim Abrufen der Bücher:', error);
     }
   }
+  isFetchingBooks.value = false;
 };
 
 const selectCustomer = (customer) => {
@@ -142,13 +148,17 @@ watch(bookQuery, fetchBooks);
     <div class="bg-white p-6 rounded shadow-lg w-1/3">
       <h2 class="text-2xl font-bold mb-4">Buch ausleihen</h2>
       <form @submit.prevent="rentBook">
+        <div v-if="isFetchingCustomers" class="text-gray-500 text-sm mt-1">Lade Kunden...</div>
         <CustomerSearch
+          v-else
           v-model:searchQuery="searchQuery"
           :customers="customers"
           :showCustomerDropdown="showCustomerDropdown"
           @selectCustomer="selectCustomer"
         />
+        <div v-if="isFetchingBooks" class="text-gray-500 text-sm mt-1">Lade Bücher...</div>
         <BookSearch
+          v-else
           v-model:bookQuery="bookQuery"
           :books="books"
           :showBookDropdown="showBookDropdown"

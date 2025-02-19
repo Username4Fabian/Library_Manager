@@ -2,6 +2,9 @@
 import { ref, computed, watch, onMounted } from 'vue';
 import { defineEmits } from 'vue';
 import axios from 'axios';
+import CustomerSearch from './CustomerSearch.vue';
+import BookSearch from './BookSearch.vue';
+import OverlayActions from './OverlayActions.vue';
 
 const emits = defineEmits(['closeOverlay', 'returnSuccess']);
 
@@ -55,24 +58,6 @@ const fetchBooks = async () => {
   }
 };
 
-const filteredCustomers = computed(() => {
-  if (!searchQuery.value) {
-    return [];
-  }
-  return customers.value.filter(customer =>
-    `${customer.firstName} ${customer.lastName}`.toLowerCase().includes(searchQuery.value.toLowerCase())
-  );
-});
-
-const filteredBooks = computed(() => {
-  if (!bookQuery.value) {
-    return [];
-  }
-  return books.value.filter(book =>
-    book.number.toString().includes(bookQuery.value)
-  );
-});
-
 const selectCustomer = (customer) => {
   customerId.value = customer.id;
   searchQuery.value = `${customer.firstName} ${customer.lastName}`;
@@ -81,7 +66,7 @@ const selectCustomer = (customer) => {
 
 const selectBook = (book) => {
   bookId.value = book.id;
-  bookQuery.value = book.number.toString();
+  bookQuery.value = `${book.number} | ${book.title}`;
   showBookDropdown.value = false;
 };
 
@@ -165,52 +150,19 @@ watch(bookQuery, fetchBooks);
     <div class="bg-white p-6 rounded shadow-lg w-1/3">
       <h2 class="text-2xl font-bold mb-4">Buch zurückgeben</h2>
       <form @submit.prevent="returnBook">
-        <div class="mb-4 relative">
-          <label class="block text-gray-700">Kunde</label>
-          <input
-            v-model="searchQuery"
-            @focus="showCustomerDropdown = true"
-            @input="showCustomerDropdown = true"
-            type="text"
-            placeholder="Kunden suchen..."
-            class="w-full p-2 border border-gray-300 rounded mb-2"
-          />
-          <ul v-if="showCustomerDropdown && filteredCustomers.length" class="absolute z-10 w-full bg-white border border-gray-300 rounded mt-1 max-h-40 overflow-y-auto">
-            <li
-              v-for="customer in filteredCustomers"
-              :key="customer.id"
-              @click="selectCustomer(customer)"
-              class="p-2 cursor-pointer hover:bg-gray-200"
-            >
-              {{ customer.firstName }} {{ customer.lastName }}
-            </li>
-          </ul>
-        </div>
-        <div class="mb-4 relative">
-          <label class="block text-gray-700">Buch Nummer</label>
-          <input
-            v-model="bookQuery"
-            @focus="showBookDropdown = true"
-            @input="showBookDropdown = true"
-            type="text"
-            placeholder="Buch Nummer"
-            class="w-full p-2 border border-gray-300 rounded mb-2"
-          />
-          <ul v-if="showBookDropdown && filteredBooks.length" class="absolute z-10 w-full bg-white border border-gray-300 rounded mt-1 max-h-40 overflow-y-auto">
-            <li
-              v-for="book in filteredBooks"
-              :key="book.id"
-              @click="selectBook(book)"
-              class="p-2 cursor-pointer hover:bg-gray-200"
-            >
-              {{ book.number }} - {{ book.title }}
-            </li>
-          </ul>
-        </div>
-        <div class="flex justify-end items-center">
-          <button type="button" @click="$emit('closeOverlay')" class="mr-2 p-2 bg-gray-500 hover:bg-gray-700 text-white rounded hover:scale-102 hover:cursor-pointer">Abbrechen</button>
-          <button type="submit" :disabled="isLoading" class="p-2 bg-blue-500 hover:bg-blue-700 text-white rounded hover:scale-102 hover:cursor-pointer">Buch zurückgeben</button>
-        </div>
+        <CustomerSearch
+          v-model:searchQuery="searchQuery"
+          :customers="customers"
+          :showCustomerDropdown="showCustomerDropdown"
+          @selectCustomer="selectCustomer"
+        />
+        <BookSearch
+          v-model:bookQuery="bookQuery"
+          :books="books"
+          :showBookDropdown="showBookDropdown"
+          @selectBook="selectBook"
+        />
+        <OverlayActions :isLoading="isLoading" actionLabel="Buch zurückgeben" @closeOverlay="$emit('closeOverlay')" />
         <div v-if="errorMessage" class="mt-4 text-red-500">{{ errorMessage }}</div>
       </form>
     </div>

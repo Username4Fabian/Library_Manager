@@ -39,14 +39,14 @@ const fetchCustomers = async () => {
 const addCustomer = (newCustomer) => {
   customers.value.push(newCustomer);
   localStorage.setItem('customers', JSON.stringify(customers.value));
-  toastMessage.value = 'Kunde erfolgreich hinzugefügt!';
+  toastMessage.value = 'Kind erfolgreich hinzugefügt!';
   showToast.value = true;
 };
 
 const handleCustomerDeleted = (deletedCustomer) => {
   customers.value = customers.value.filter(c => c.id !== deletedCustomer.id);
   localStorage.setItem('customers', JSON.stringify(customers.value));
-  toastMessage.value = 'Kunde erfolgreich gelöscht!';
+  toastMessage.value = 'Kind erfolgreich gelöscht!';
   showToast.value = true;
 
   const totalPages = Math.ceil(customers.value.length / customersPerPage);

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, computed, watch, onMounted, nextTick } from 'vue';
 import { defineEmits } from 'vue';
 import axios from 'axios';
 
@@ -16,6 +16,7 @@ const errorMessage = ref('');
 const showCustomerDropdown = ref(false);
 const showBookDropdown = ref(false);
 const fetchInterval = 5 * 60 * 1000; // 5 minutes in milliseconds
+const customerInputRef = ref(null);
 
 const fetchCustomers = async () => {
   const cachedCustomers = localStorage.getItem('customers');
@@ -130,6 +131,9 @@ const rentBook = async () => {
 onMounted(() => {
   fetchCustomers();
   fetchBooks();
+  nextTick(() => {
+    customerInputRef.value.focus();
+  });
 });
 
 watch(searchQuery, fetchCustomers);
@@ -144,6 +148,7 @@ watch(bookQuery, fetchBooks);
         <div class="mb-4 relative">
           <label class="block text-gray-700">Kunde</label>
           <input
+            ref="customerInputRef"
             v-model="searchQuery"
             @focus="showCustomerDropdown = true"
             @input="showCustomerDropdown = true"
@@ -184,7 +189,6 @@ watch(bookQuery, fetchBooks);
           </ul>
         </div>
         <div class="flex justify-end items-center">
-          <div v-if="isLoading" class="loader mr-2"></div>
           <button type="button" @click="$emit('closeOverlay')" class="mr-2 p-2 bg-gray-500 hover:bg-gray-700 text-white rounded hover:scale-102 hover:cursor-pointer">Abbrechen</button>
           <button type="submit" :disabled="isLoading" class="p-2 bg-blue-500 hover:bg-blue-700 text-white rounded hover:scale-102 hover:cursor-pointer">Buch ausleihen</button>
         </div>
@@ -193,25 +197,3 @@ watch(bookQuery, fetchBooks);
     </div>
   </div>
 </template>
-
-<style scoped>
-.loader {
-  border: 4px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 4px solid #3498db;
-  width: 24px;
-  height: 24px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
-}
-
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-</style>

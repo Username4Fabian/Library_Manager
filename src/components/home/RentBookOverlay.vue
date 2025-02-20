@@ -150,7 +150,7 @@ watch(bookQuery, fetchBooks);
     <div class="bg-white p-6 rounded shadow-lg w-full max-w-md md:max-w-lg lg:max-w-xl">
       <h2 class="text-2xl font-bold mb-4">Buch ausleihen</h2>
       <form @submit.prevent="rentBook">
-        <div v-if="isFetchingCustomers" class="text-gray-500 text-sm mt-1">Lade Kunden...</div>
+        <div v-if="isFetchingCustomers" class="text-gray-500 text-sm mt-1">Lade Kinder...</div>
         <CustomerSearch
           v-else
           v-model:searchQuery="searchQuery"
